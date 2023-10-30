@@ -1,6 +1,8 @@
 "use client";
 import DatePicker from "react-datepicker";
 import React, { useState } from "react";
+import Toastify from 'toastify-js';
+import 'toastify-js/src/toastify.css';
 import "react-datepicker/dist/react-datepicker.css";
 
 const BookingForm = ({ boatBookings, boatId, perDayCost }: any) => {
@@ -32,6 +34,11 @@ const BookingForm = ({ boatBookings, boatId, perDayCost }: any) => {
     disabledDates.push(date);
   };
 
+  const showToast = () => {
+    return Toastify({text: "This is a toast",duration: 3000}).showToast();
+  }
+
+
   const handleSubmit = async (e: any) => {
     const newSelectedDate1 = new Date(
       selectedDate!.getTime() + 5 * 60 * 60 * 1000
@@ -43,7 +50,7 @@ const BookingForm = ({ boatBookings, boatId, perDayCost }: any) => {
       newSelectedDate2.valueOf() - newSelectedDate1.valueOf();
 
     const daysDifference = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
-    const totalPrice = perDayCost * daysDifference
+    const totalPrice = daysDifference > 0 ? perDayCost * daysDifference : perDayCost
 
     e.preventDefault();
 
@@ -115,6 +122,9 @@ const BookingForm = ({ boatBookings, boatId, perDayCost }: any) => {
         </button>
       </form>
       {showSuccess && <p className="bg-green-300 border rounded-lg p-2 mt-2">Booking Created Successfully!</p>}
+
+      
+
     </div>
   );
 };

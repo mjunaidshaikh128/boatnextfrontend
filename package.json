@@ -19,6 +19,7 @@
     "react-datepicker": "^4.21.0",
     "react-dom": "^18",
     "react-fontawesome": "^1.7.1",
+    "toastify-js": "^1.12.0",
     "tw-elements": "^1.0.0"
   },
   "devDependencies": {
@@ -26,6 +27,7 @@
     "@types/react": "^18",
     "@types/react-datepicker": "^4.19.1",
     "@types/react-dom": "^18",
+    "@types/toastify-js": "^1.12.2",
     "autoprefixer": "^10",
     "eslint": "^8",
     "eslint-config-next": "13.5.6",
