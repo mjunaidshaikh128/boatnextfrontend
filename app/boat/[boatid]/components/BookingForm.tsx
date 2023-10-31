@@ -90,34 +90,36 @@ const BookingForm = ({ boatBookings, boatId, perDayCost }: any) => {
   return (
     <div className="mt-4">
       <form onSubmit={handleSubmit}>
-        <div className="flex gap-x-4 mb-4">
-          <div className="">
-            <label htmlFor="checkInDate">Check In Date: </label>
+        <h2>Dates: </h2>
+        <div className="flex gap-x-4 mb-4 items-center border rounded-sm border-slate-200 p-2 justify-center">
+          <div>
             <DatePicker
-              className="border border-slate-500 rounded-lg"
+              className="w-36 px-1"
               selected={selectedDate}
               onChange={(date: Date) => setSelectedDate(date)}
               minDate={new Date()}
               filterDate={isDateDisabled}
               id="checkInDate"
               name="checkInDate"
+              placeholderText="Check-In Date"
             />
           </div>
+          <div className="text-slate-500 text-2xl">{">"}</div>
           <div>
-            <label htmlFor="checkOutDate">Check Out Date: </label>
             <DatePicker
-              className="border border-slate-500 rounded-lg"
+              className="w-36 px-1 "
               selected={selectedDate2}
               onChange={(date: Date) => setSelectedDate2(date)}
               minDate={new Date()}
               filterDate={isDateDisabled}
               id="checkOutDate"
               name="checkOutDate"
+              placeholderText="Check-Out Date"
             />
           </div>
         </div>
 
-        <button className="px-4 py-2 bg-green-800 text-white rounded-lg">
+        <button className="px-4 py-2 bg-green-800 text-white rounded-lg w-full">
           Book Now
         </button>
       </form>

@@ -21,14 +21,16 @@ function DatePickerComp({boatBookings}: any) {
   };
 
   return (
-    <DatePicker
-      selected={selectedDate}
-      onChange={(date: Date) => setSelectedDate(date)}
-      minDate={new Date()}
-      filterDate={isDateDisabled}
-      monthsShown={2}
-      inline
-    />
+    <div className="">
+      <DatePicker
+        selected={selectedDate}
+        onChange={(date: Date) => setSelectedDate(date)}
+        minDate={new Date()}
+        filterDate={isDateDisabled}
+        monthsShown={2}
+        inline
+      />
+    </div>
   );
 }
 
