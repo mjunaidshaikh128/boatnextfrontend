@@ -1,14 +1,26 @@
 "use client";
 import DatePicker from "react-datepicker";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Toastify from 'toastify-js';
 import 'toastify-js/src/toastify.css';
 import "react-datepicker/dist/react-datepicker.css";
+import { useRouter } from 'next/navigation';
 
 const BookingForm = ({ boatBookings, boatId, perDayCost }: any) => {
   const [selectedDate, setSelectedDate] = useState<Date | null>(null);
   const [selectedDate2, setSelectedDate2] = useState<Date | null>(null);
   const [showSuccess, setShowSuccess] = useState(false)
+  const router = useRouter()
+
+  useEffect(() => {
+    //Runs on the first render
+    //And any time any dependency value changes
+    if (showSuccess) {
+      showToast()
+      router.refresh()
+      
+    }
+  }, [showSuccess]);
 
   // Array of dates to disable (example: February 1st, 2023 and March 15th, 2023)
   const checkInDates = boatBookings.map(
@@ -35,7 +47,9 @@ const BookingForm = ({ boatBookings, boatId, perDayCost }: any) => {
   };
 
   const showToast = () => {
-    return Toastify({text: "This is a toast",duration: 3000}).showToast();
+    return Toastify({text: "Booking created successfully!",duration: 3000, style: {
+      background: "linear-gradient(to right, #00b09b, #96c93d)",
+    },}).showToast();
   }
 
 
@@ -73,9 +87,6 @@ const BookingForm = ({ boatBookings, boatId, perDayCost }: any) => {
         if (response.ok) {
           // Request was successful
           setShowSuccess(true)
-          setTimeout(()=> {
-            setShowSuccess(false)
-          }, 2000)
           const data = await response.json();
           console.log('API Response:', data);
         } else {
@@ -121,11 +132,11 @@ const BookingForm = ({ boatBookings, boatId, perDayCost }: any) => {
           </div>
         </div>
 
-        <button className="px-4 py-2 bg-green-600 hover:bg-green-700 transition ease-in-out duration-300 text-white rounded-lg w-full">
+        <button className="px-4 py-2 bg-[#48ac98] hover:bg-[#398979] transition ease-in-out duration-300 text-white rounded-lg w-full">
           Book Now
         </button>
       </form>
-      {showSuccess && <p className="bg-green-300 border rounded-lg p-2 mt-2">Booking Created Successfully!</p>}
+      {/* {showSuccess && <p className="bg-green-300 border rounded-lg p-2 mt-2">Booking Created Successfully!</p>} */}
 
       
 

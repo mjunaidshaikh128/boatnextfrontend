@@ -89,8 +89,8 @@ export default function BoatSection({ boats, locations, inCities }) {
   };
 
   return (
-    <div className="flex bg-white py-12 sm:py-32">
-      <div className="mx-auto max-w-3xl px-6 lg:px-8 hidden md:block">
+    <div className="flex bg-white py-12">
+      <div className="mx-auto max-w-3xl px-6 lg:px-8 hidden md:block py-8">
         <h2 className="text-md font-semibold tracking-tight text-gray-900 sm:text-2xl">
           Filters
         </h2>
@@ -98,11 +98,7 @@ export default function BoatSection({ boats, locations, inCities }) {
           <h3>Filter By Location</h3>
           <ul className="mt-2 space-y-2">
             {locations.map((location, index) => (
-              <li
-                className="bg-slate-200 p-2 flex gap-x-2 rounded-lg"
-                key={location.id}
-              >
-                <label htmlFor={location.id}>{location.address}</label>
+              <li className="p-2 flex gap-x-2 rounded-lg" key={location.id}>
                 <input
                   type="checkbox"
                   name="location"
@@ -110,6 +106,7 @@ export default function BoatSection({ boats, locations, inCities }) {
                   checked={checkedValues[index]}
                   onChange={() => handleLocationChange(index)}
                 />
+                <label htmlFor={location.id}>{location.address}</label>
               </li>
             ))}
           </ul>
@@ -119,10 +116,9 @@ export default function BoatSection({ boats, locations, inCities }) {
           <ul className="mt-2 space-y-2">
             {cities.map((city, index) => (
               <li
-                className="bg-slate-200 p-2 flex gap-x-2 rounded-lg"
+                className="p-2 flex gap-x-2 rounded-lg"
                 key={index}
               >
-                <label htmlFor={city}>{city}</label>
                 <input
                   type="checkbox"
                   name="location"
@@ -130,6 +126,7 @@ export default function BoatSection({ boats, locations, inCities }) {
                   checked={checkedCities[index]}
                   onChange={() => handleCitiesChange(index, city)}
                 />
+                <label htmlFor={city}>{city}</label>
               </li>
             ))}
           </ul>
@@ -188,7 +185,7 @@ export default function BoatSection({ boats, locations, inCities }) {
           </div>
         )} */}
         {
-          <div className="mx-auto mt-10 grid  grid-cols-1 gap-x-8 gap-y-16 border-t border-gray-200 pt-10 sm:mt-16 sm:pt-16 lg:mx-0 lg:max-w-none lg:grid-cols-3">
+          <div className="mx-auto mt-10 grid  grid-cols-1 gap-x-8 gap-y-8 pt-2 sm:mt-16 sm:pt-2 lg:mx-0 lg:max-w-none lg:grid-cols-3">
             {filteredBoats.map((boat) => (
               <article
                 key={boat.id}
@@ -197,7 +194,7 @@ export default function BoatSection({ boats, locations, inCities }) {
                 <Link href={`/boat/${boat.id}`}>
                   <div className="border bt-1 rounded-lg">
                     <Image
-                      src={boat.images[0]}
+                      src={`https://res.cloudinary.com/dtsuwtlgx${boat.images[0]}`}
                       width={500}
                       height={500}
                       alt="Boat image"
@@ -232,13 +229,13 @@ export default function BoatSection({ boats, locations, inCities }) {
                         xmlns="http://www.w3.org/2000/svg"
                         fill="none"
                         viewBox="0 0 24 24"
-                        stroke-width="1.5"
+                        strokeWidth="1.5"
                         stroke="currentColor"
                         className="w-5 h-5 inline"
                       >
                         <path
-                          stroke-linecap="round"
-                          stroke-linejoin="round"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
                           d="M4.26 10.147a60.436 60.436 0 00-.491 6.347A48.627 48.627 0 0112 20.904a48.627 48.627 0 018.232-4.41 60.46 60.46 0 00-.491-6.347m-15.482 0a50.57 50.57 0 00-2.658-.813A59.905 59.905 0 0112 3.493a59.902 59.902 0 0110.399 5.84c-.896.248-1.783.52-2.658.814m-15.482 0A50.697 50.697 0 0112 13.489a50.702 50.702 0 017.74-3.342M6.75 15a.75.75 0 100-1.5.75.75 0 000 1.5zm0 0v-3.675A55.378 55.378 0 0112 8.443m-7.007 11.55A5.981 5.981 0 006.75 15.75v-1.5"
                         />
                       </svg>

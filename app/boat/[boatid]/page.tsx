@@ -63,11 +63,11 @@ export default async function Page({ params }: { params: { boatid: string } }) {
                 {boat.name}
               </h2>
               {/* {Grid for images} */}
-              <div className="border grid grid-cols-2 gap-x-1 mt-2">
+              <div className="grid grid-cols-2 gap-x-1 mt-2">
                 <div>
                   <Link href={boat.images[0]} target="blank" className="">
                     <Image
-                      src={boat.images[0]}
+                      src={`https://res.cloudinary.com/dtsuwtlgx${boat.images[0]}`}
                       alt="Main Image"
                       width={500}
                       height={500}
@@ -75,11 +75,11 @@ export default async function Page({ params }: { params: { boatid: string } }) {
                     />
                   </Link>
                 </div>
-                <div className="border grid grid-cols-2 gap-1">
+                <div className="grid grid-cols-2 gap-1">
                   {boat.images[1] && (
                     <div>
                       <Image
-                        src={boat.images[1]}
+                        src={`https://res.cloudinary.com/dtsuwtlgx${boat.images[1]}`}
                         alt="Image 1"
                         width={500}
                         height={500}
@@ -90,7 +90,7 @@ export default async function Page({ params }: { params: { boatid: string } }) {
                   {boat.images[2] && (
                     <div>
                       <Image
-                        src={boat.images[2]}
+                        src={`https://res.cloudinary.com/dtsuwtlgx${boat.images[2]}`}
                         alt="Image 2"
                         width={500}
                         height={500}
@@ -101,7 +101,7 @@ export default async function Page({ params }: { params: { boatid: string } }) {
                   {boat.images[3] && (
                     <div>
                       <Image
-                        src={boat.images[3]}
+                        src={`https://res.cloudinary.com/dtsuwtlgx${boat.images[3]}`}
                         alt="Image 3"
                         width={500}
                         height={500}
@@ -114,7 +114,7 @@ export default async function Page({ params }: { params: { boatid: string } }) {
 
               <div className="grid grid-cols-3 gap-x-8">
                 <div className="col-span-2">
-                  <div className="mt-4 flex justify-between border-y border-gray-200 py-4">
+                  <div className="mt-4 flex justify-between py-4">
                     <div>
                       <h4 className="font-semibold text-md">
                         {boat.type.name} owned by {boat.owner.name}
@@ -143,13 +143,13 @@ export default async function Page({ params }: { params: { boatid: string } }) {
                         xmlns="http://www.w3.org/2000/svg"
                         fill="none"
                         viewBox="0 0 24 24"
-                        stroke-width="1.5"
+                        strokeWidth="1.5"
                         stroke="currentColor"
                         className="w-8 h-8"
                       >
                         <path
-                          stroke-linecap="round"
-                          stroke-linejoin="round"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
                           d="M4.26 10.147a60.436 60.436 0 00-.491 6.347A48.627 48.627 0 0112 20.904a48.627 48.627 0 018.232-4.41 60.46 60.46 0 00-.491-6.347m-15.482 0a50.57 50.57 0 00-2.658-.813A59.905 59.905 0 0112 3.493a59.902 59.902 0 0110.399 5.84c-.896.248-1.783.52-2.658.814m-15.482 0A50.697 50.697 0 0112 13.489a50.702 50.702 0 017.74-3.342M6.75 15a.75.75 0 100-1.5.75.75 0 000 1.5zm0 0v-3.675A55.378 55.378 0 0112 8.443m-7.007 11.55A5.981 5.981 0 006.75 15.75v-1.5"
                         />
                       </svg>
@@ -283,7 +283,7 @@ export default async function Page({ params }: { params: { boatid: string } }) {
                   </div>
                 </div>
                 <div className="col-span-1">
-                  <div className="mt-4 border p-4 rounded-md shadow-2xl sticky top-4">
+                  <div className="mt-4 border p-4 rounded-md shadow-2xl sticky top-20">
                     <h2 className="text-xl font-semibold mb-4">
                       Add dates for booking
                     </h2>
