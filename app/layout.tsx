@@ -4,6 +4,7 @@ import "./globals.css";
 import Navbar from "./components/Navbar";
 import "@fortawesome/fontawesome-svg-core/styles.css";
 import { config } from "@fortawesome/fontawesome-svg-core";
+import Footer from "./components/Footer";
 config.autoAddCss = false;
 
 const inter = Inter({ subsets: ["latin"] });
@@ -20,9 +21,11 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className="h-full bg-white">
+      <link rel="icon" href="https://static1.clickandboat.com/v1/o/img/favicon/CAB/favicon~0dd1ad09b5.ico" sizes="any"></link>
       <body className={"h-full"}>
         <Navbar />
         {children}
+        <Footer />
       </body>
     </html>
   );

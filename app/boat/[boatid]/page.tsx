@@ -57,7 +57,7 @@ export default async function Page({ params }: { params: { boatid: string } }) {
       </header>
       <main>
         <div className="mx-auto max-w-7xl py-6 sm:px-6 lg:px-8">
-          <div className="bg-white py-24 sm:py-32 lg:py-12">
+          <div className="bg-white py-24 ">
             <div className="mx-auto max-w-7xl px-6 lg:px-8">
               <h2 className="text-3xl font-semibold tracking-wider">
                 {boat.name}

@@ -39,11 +39,7 @@ export default async function Home() {
       <div className="min-h-full">
         <main>
           <div className="mx-auto max-w-full py-6 sm:px-6 lg:px-8">
-            <BoatSection
-              boats={boats}
-              locations={locations}
-              inCities={cities}
-            />
+            <BoatSection boats={boats} locations={locations} />
           </div>
         </main>
       </div>

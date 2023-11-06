@@ -5,92 +5,83 @@ import Search from "./Search";
 import { useState, useEffect } from "react";
 import { FaBed } from "react-icons/fa";
 
-export default function BoatSection({ boats, locations, inCities }) {
+export default function BoatSection({ boats, locations }) {
+  const queryParams = new URLSearchParams();
   const [isSearch, setIsSearch] = useState(false);
   const [filteredBoats, setFilteredBoats] = useState(boats);
-  const [cities, setCities] = useState(inCities);
-  const [updatedCities, setUpdatedCities] = useState([]);
   const [checkedValues, setCheckedValues] = useState(
     new Array(locations.length).fill(false)
   );
-  const [checkedCities, setCheckedCities] = useState(
-    new Array(inCities.length).fill(false)
-  );
-  // const [cities, setCities] = useState(null)
 
   // useEffect(() => {
-  //   const newCities = []
-  //   locations.map((loc) => {
-  //     if (!newCities.includes(loc.city)) {
-  //       newCities.push(loc.city)
-  //     }
-  //   })
-  //   setCities([...newCities])
-  // }, [locations])
+  //   const newParams = params + locationParams
+  //   setParams(newParams)
+  //   console.log("Params ", params);
+  // }, [locationParams])
+
+  const getFilteredBoats = async () => {
+    const res = await fetch(
+      `http://localhost:3000/item/findByFilter?${queryParams.toString()}`,
+      { cache: "no-cache" }
+    );
+    if (!res.ok) {
+      throw new Error("Failed to fetch data");
+    }
+    return res.json();
+  };
 
   const handleSearch = (query) => {
     setIsSearch(true);
-    console.log(query);
+    // console.log(query);
     const filterBoats = boats.filter((bt) =>
       bt.name.toLowerCase().includes(query.toLowerCase())
     );
     setFilteredBoats(filterBoats);
-    console.log(filteredBoats);
+    // console.log(filteredBoats);
   };
 
-  const handleLocationChange = (index) => {
+  const handleLocationChange = async (index) => {
     const updatedCheckedValues = [...checkedValues];
     updatedCheckedValues[index] = !updatedCheckedValues[index];
     setCheckedValues(updatedCheckedValues);
-    console.log(checkedValues);
 
     const checkedCheckboxes = updatedCheckedValues
       .map((value, index) => (value ? locations[index] : null))
       .filter((value) => value !== null);
-    console.log(checkedCheckboxes);
     if (checkedCheckboxes.length > 0) {
-      const filterBoats = boats.filter((bt) =>
-        checkedCheckboxes.find((loc) => loc.id === bt.locationId)
-      );
+      checkedCheckboxes.map((loc, index) => {
+        queryParams.append("location", loc.id);
+        console.log(queryParams.toString());
+      });
+
+      const filterBoats = await getFilteredBoats();
       setFilteredBoats(filterBoats);
     } else {
       setFilteredBoats(boats);
     }
   };
-  const handleCitiesChange = (index, city) => {
-    //handling of multiple checkboxes
-    const updatedCheckedValues = [...checkedCities];
-    updatedCheckedValues[index] = !updatedCheckedValues[index];
-    setCheckedCities(updatedCheckedValues);
-    const updatedCitiesVar = [];
-    if (!updatedCities.includes(city)) {
-      setUpdatedCities([...updatedCities, city]);
-    }
+  // const handleLocationChange = (index) => {
+  //   const updatedCheckedValues = [...checkedValues];
+  //   updatedCheckedValues[index] = !updatedCheckedValues[index];
+  //   setCheckedValues(updatedCheckedValues);
+  //   console.log(checkedValues);
 
-    // const checkedCheckboxes = updatedCheckedValues
-    //   .map((value, index) => (value ? locations[index] : null))
-    //   .filter((value) => value !== null);
-    // console.log(checkedCheckboxes);
-    // if (checkedCheckboxes.length > 0) {
-    const filterBoats = boats.filter((bt) =>
-      updatedCities.includes(bt.location.city)
-    );
-    console.log(filterBoats);
-
-    // console.log('updated Citites' ,updatedCities);
-    // setCities(updatedCities)
-
-    // setFilteredBoats(filterBoats);
-
-    // } else {
-    //   setFilteredBoats(boats);
-
-    // }
-  };
-
+  //   const checkedCheckboxes = updatedCheckedValues
+  //     .map((value, index) => (value ? locations[index] : null))
+  //     .filter((value) => value !== null);
+  //   console.log(checkedCheckboxes);
+  //   if (checkedCheckboxes.length > 0) {
+  //     const filterBoats = boats.filter((bt) =>
+  //       checkedCheckboxes.find((loc) => loc.id === bt.locationId)
+  //     );
+  //     setFilteredBoats(filterBoats);
+  //   } else {
+  //     setFilteredBoats(boats);
+  //   }
+  // };
   return (
     <div className="flex bg-white py-12">
-      <div className="mx-auto max-w-3xl px-6 lg:px-8 hidden md:block py-8">
+      <div className="mx-auto max-w-3xl  hidden md:block py-8">
         <h2 className="text-md font-semibold tracking-tight text-gray-900 sm:text-2xl">
           Filters
         </h2>
@@ -112,6 +103,36 @@ export default function BoatSection({ boats, locations, inCities }) {
           </ul>
         </div>
         <div className="mt-2">
+          <h3>Filter By Capacity</h3>
+          <div>
+            <div className="flex items-center space-x-2">
+              <span className="text-gray-600">
+                Min: <span id="min-value"></span>
+              </span>
+              <input
+                type="range"
+                id="range-min"
+                min="0"
+                max="100"
+                step="1"
+                className="w-64 appearance-none rounded-full h-2 bg-gray-300 outline-none"
+              />
+              <span className="text-gray-600">
+                Max: <span id="max-value"></span>
+              </span>
+            </div>
+            <div className="text-center mt-2">
+              <span className="text-blue-600 font-bold" id="range-min-value">
+                25
+              </span>
+              <span className="text-gray-400 mx-2"> - </span>
+              <span className="text-blue-600 font-bold" id="range-max-value">
+                75
+              </span>
+            </div>
+          </div>
+        </div>
+        {/* <div className="mt-2">
           <h3>Filter By City</h3>
           <ul className="mt-2 space-y-2">
             {cities.map((city, index) => (
@@ -130,7 +151,7 @@ export default function BoatSection({ boats, locations, inCities }) {
               </li>
             ))}
           </ul>
-        </div>
+        </div> */}
       </div>
 
       <div className="mx-auto max-w-6xl px-6 lg:px-4">
