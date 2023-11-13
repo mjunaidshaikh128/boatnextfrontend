@@ -4,10 +4,13 @@ import Link from "next/link";
 import Search from "./Search";
 import { useState, useEffect } from "react";
 import { FaBed } from "react-icons/fa";
+import { UsersIcon } from "@heroicons/react/24/outline";
 
 export default function BoatSection({ boats, locations }) {
   const queryParams = new URLSearchParams();
   const [isSearch, setIsSearch] = useState(false);
+  const [capacity, setCapactiy] = useState(0);
+  const [price, setPrice] = useState(0);
   const [filteredBoats, setFilteredBoats] = useState(boats);
   const [checkedValues, setCheckedValues] = useState(
     new Array(locations.length).fill(false)
@@ -30,12 +33,26 @@ export default function BoatSection({ boats, locations }) {
     return res.json();
   };
 
-  const handleSearch = (query) => {
-    setIsSearch(true);
-    // console.log(query);
-    const filterBoats = boats.filter((bt) =>
-      bt.name.toLowerCase().includes(query.toLowerCase())
+  const getSearchedBoats = async (query) => {
+    const res = await fetch(
+      `http://localhost:3000/item/search?query=${query}`,
+      { cache: "no-cache" }
     );
+    if (!res.ok) {
+      throw new Error("Failed to fetch data");
+    }
+    return res.json();
+  };
+
+  const handleSearch = async (query) => {
+    setIsSearch(true);
+
+    // console.log(query);
+    // setSearchParam(query)
+    const filterBoats = await getSearchedBoats(query)
+    // const filterBoats = boats.filter((bt) =>
+    //   bt.name.toLowerCase().includes(query.toLowerCase())
+    // );
     setFilteredBoats(filterBoats);
     // console.log(filteredBoats);
   };
@@ -51,8 +68,10 @@ export default function BoatSection({ boats, locations }) {
     if (checkedCheckboxes.length > 0) {
       checkedCheckboxes.map((loc, index) => {
         queryParams.append("location", loc.id);
+        
         console.log(queryParams.toString());
       });
+      
 
       const filterBoats = await getFilteredBoats();
       setFilteredBoats(filterBoats);
@@ -60,6 +79,22 @@ export default function BoatSection({ boats, locations }) {
       setFilteredBoats(boats);
     }
   };
+
+  const handleCapacityChange = async (e) => {
+    setCapactiy(e.target.value);
+    queryParams.append("capacity", e.target.value);
+    const filterBoats = await getFilteredBoats();
+    setFilteredBoats(filterBoats);
+  };
+
+  const handlePriceChange = async (e) => {
+    setPrice(e.target.value);
+    queryParams.append("price", e.target.value);
+    const filterBoats = await getFilteredBoats();
+    setFilteredBoats(filterBoats);
+
+
+  }
   // const handleLocationChange = (index) => {
   //   const updatedCheckedValues = [...checkedValues];
   //   updatedCheckedValues[index] = !updatedCheckedValues[index];
@@ -102,35 +137,33 @@ export default function BoatSection({ boats, locations }) {
             ))}
           </ul>
         </div>
-        <div className="mt-2">
+        <div className="mt-6">
           <h3>Filter By Capacity</h3>
-          <div>
-            <div className="flex items-center space-x-2">
-              <span className="text-gray-600">
-                Min: <span id="min-value"></span>
-              </span>
-              <input
-                type="range"
-                id="range-min"
-                min="0"
-                max="100"
-                step="1"
-                className="w-64 appearance-none rounded-full h-2 bg-gray-300 outline-none"
-              />
-              <span className="text-gray-600">
-                Max: <span id="max-value"></span>
-              </span>
-            </div>
-            <div className="text-center mt-2">
-              <span className="text-blue-600 font-bold" id="range-min-value">
-                25
-              </span>
-              <span className="text-gray-400 mx-2"> - </span>
-              <span className="text-blue-600 font-bold" id="range-max-value">
-                75
-              </span>
-            </div>
-          </div>
+          <input
+            type="range"
+            name="capacity"
+            id="capacity"
+            min={0}
+            max={2000}
+            step={100}
+            value={capacity}
+            onChange={handleCapacityChange}
+          />
+          <p>{capacity}</p>
+        </div>
+        <div className="mt-6">
+          <h3>Filter By Price</h3>
+          <input
+            type="range"
+            name="price"
+            id="price"
+            min={0}
+            max={1000}
+            step={100}
+            value={price}
+            onChange={handlePriceChange}
+          />
+          <p>{price}</p>
         </div>
         {/* <div className="mt-2">
           <h3>Filter By City</h3>
