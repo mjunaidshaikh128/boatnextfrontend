@@ -14,6 +14,7 @@ import DatePickerComp from "./components/DatePickerComp";
 import BookingForm from "./components/BookingForm";
 import Link from "next/link";
 import DynamicFaIcon from "./components/DynamicFaIcon";
+import Chat from './components/Chat'
 
 async function getBoat(boatid: any) {
   const res = await fetch(`http://localhost:3000/item/${boatid}`, {
@@ -300,6 +301,7 @@ export default async function Page({ params }: { params: { boatid: string } }) {
           </div>
         </div>
       </main>
+      <Chat />
     </div>
   );
 }

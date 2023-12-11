@@ -149,7 +149,7 @@ const Navbar = () => {
               <div className="hidden md:block">
                 <div className="ml-4 flex items-center md:ml-6 gap-x-6">
                   <Link href={"/"}>Help</Link>
-                  <Link href={"/"}>Login</Link>
+                  <Link href={"/auth/login"}>Login</Link>
                   <Link href={"/"}>Register</Link>
                 </div>
               </div>

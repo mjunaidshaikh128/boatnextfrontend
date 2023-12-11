@@ -1,6 +1,6 @@
 import Image from "next/image";
-import BoatSection from "./components/BoatSection";
-import Navbar from "./components/Navbar";
+// import Navbar from "./components/Navbar";
+import BoatSection from './components/BoatSection'
 
 async function getBoats() {
   const res = await fetch("http://localhost:3000/item", { cache: "no-cache" });
